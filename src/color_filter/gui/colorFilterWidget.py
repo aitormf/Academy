@@ -17,15 +17,13 @@
 #       Alberto Martin Florido <almartinflorido@gmail.com>
 #
 
-from PyQt5.QtCore import pyqtSignal
-from PyQt5.QtWidgets import QWidget, QLabel
-from PyQt5.QtGui import QImage, QPixmap
+from PyQt4 import QtGui,QtCore
 
-class ColorFilterWidget(QWidget):
+class ColorFilterWidget(QtGui.QWidget):
     IMAGE_COLS_MAX=640
     IMAGE_ROWS_MAX=360
     
-    imageUpdate=pyqtSignal()
+    imageUpdate=QtCore.pyqtSignal()
     
     def __init__(self,winParent):      
         super(ColorFilterWidget, self).__init__()
@@ -40,12 +38,12 @@ class ColorFilterWidget(QWidget):
         self.setMinimumSize(1340,400)
         self.setMaximumSize(1340,400)
 
-        self.imgLabelColor=QLabel(self)
+        self.imgLabelColor=QtGui.QLabel(self)
         self.imgLabelColor.resize(self.IMAGE_COLS_MAX,self.IMAGE_ROWS_MAX)
         self.imgLabelColor.move(20,20)
         self.imgLabelColor.show()
 
-        self.imgLabelBlackWhite=QLabel(self)
+        self.imgLabelBlackWhite=QtGui.QLabel(self)
         self.imgLabelBlackWhite.resize(self.IMAGE_COLS_MAX,self.IMAGE_ROWS_MAX)
         self.imgLabelBlackWhite.move(40 + self.IMAGE_COLS_MAX,20)
         self.imgLabelBlackWhite.show()
@@ -54,19 +52,19 @@ class ColorFilterWidget(QWidget):
         img = self.winParent.getCamera().getColorImage()
 
         if img is not None:
-            image = QImage(img.data, img.shape[1], img.shape[0], img.shape[1] * img.shape[2], QImage.Format_RGB888)
-            self.imgLabelColor.setPixmap(QPixmap.fromImage(image))
+            image = QtGui.QImage(img.data, img.shape[1], img.shape[0], img.shape[1] * img.shape[2], QtGui.QImage.Format_RGB888)
+            self.imgLabelColor.setPixmap(QtGui.QPixmap.fromImage(image))
 
-    def setThresholdImage(self):
-        img = self.winParent.getCamera().getThresholdImage()
+    def setThresoldImage(self):
+        img = self.winParent.getCamera().getThresoldImage()
 
         if img is not None:
-            image = QImage(img.data, img.shape[1], img.shape[0], img.shape[1], QImage.Format_Indexed8)
-            self.imgLabelBlackWhite.setPixmap(QPixmap.fromImage(image))
+            image = QtGui.QImage(img.data, img.shape[1], img.shape[0], img.shape[1], QtGui.QImage.Format_Indexed8)
+            self.imgLabelBlackWhite.setPixmap(QtGui.QPixmap.fromImage(image))
         
     def updateImage(self):
         self.setColorImage()
-        self.setThresholdImage()
+        self.setThresoldImage()
         
     def closeEvent(self, event):
         self.winParent.closeColorFilterWidget()

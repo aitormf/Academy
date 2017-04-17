@@ -34,8 +34,8 @@ class CameraFilter:
             self.trackImage = np.zeros((self.height, self.width,3), np.uint8)
             self.trackImage.shape = self.height, self.width, 3
 
-            self.thresholdImage = np.zeros((self.height,self. width,1), np.uint8)
-            self.thresholdImage.shape = self.height, self.width,
+            self.thresoldImage = np.zeros((self.height,self. width,1), np.uint8)
+            self.thresoldImage.shape = self.height, self.width,
 
         
 
@@ -63,19 +63,19 @@ class CameraFilter:
             self.trackImage.shape = image.shape
             self.lock.release()
 
-    def getThresholdImage(self):
+    def getThresoldImage(self):
         if self.client.hasproxy():
             self.lock.acquire()
             img = np.zeros((self.height, self.width,1), np.uint8)
-            img = self.thresholdImage
-            img.shape = self.thresholdImage.shape
+            img = self.thresoldImage
+            img.shape = self.thresoldImage.shape
             self.lock.release()
             return img
         return None
 
-    def setThresholdImage(self,image):
+    def setThresoldImage(self,image):
         if self.client.hasproxy():
             self.lock.acquire()
-            self.thresholdImage = image
-            self.thresholdImage.shape = image.shape
+            self.thresoldImage = image
+            self.thresoldImage.shape = image.shape
             self.lock.release()

@@ -16,21 +16,19 @@
 #  Authors :
 #       Alberto Martin Florido <almartinflorido@gmail.com>
 #
-import resources_rc
-from PyQt5 import QtGui
-from PyQt5.QtCore import pyqtSignal, QPointF, Qt, QPoint
-from PyQt5.QtWidgets import QWidget, QGridLayout
+import resources/resources_rc
+from PyQt4 import QtGui
+from PyQt4.QtCore import Qt
 
-class LogoWidget(QWidget):
+class LogoWidget(QtGui.QWidget):
 
     def __init__(self,winParent, width=0, height=0):    
         super(LogoWidget, self).__init__()
         self.winParent=winParent
-        qimage=QtGui.QImage()
-        qimage.load(':images/jderobot.png')
+        self.qimage=QtGui.QImage()
+        self.qimage.load(':images/jderobot.svg')
         if (width != 0 and height != 0):
-        	self.qimage = qimage.scaled(0.8*width, 0.8*height, Qt.KeepAspectRatio)
-        	#self.qimage = qimage.scaled(0.8*width, 0.8*height)
+        	self.qimage = self.qimage.scaled(0.8*width, 0.8*height, Qt.KeepAspectRatio)
         	self.resize(width, height)
         else:
         	self.qimage = qimage
@@ -40,5 +38,3 @@ class LogoWidget(QWidget):
 
         painter=QtGui.QPainter(self)
         painter.drawImage(self.width()/2-self.qimage.width()/2, self.height()/2-self.qimage.height()/2, self.qimage)
-
-

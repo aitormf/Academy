@@ -1,4 +1,4 @@
-#!/usr/bin/python3.5
+#!/usr/bin/python
 #
 #  Copyright (C) 1997-2016 JDE Developers Team
 #
@@ -30,7 +30,7 @@ from parallelIce.cmdvel import CMDVel
 from parallelIce.extra import Extra
 from parallelIce.pose3dClient import Pose3DClient
 from gui.GUI import MainWindow
-from PyQt5.QtWidgets import QApplication
+from PyQt4 import QtGui
 
 
 import signal
@@ -40,6 +40,7 @@ signal.signal(signal.SIGINT, signal.SIG_DFL)
 if __name__ == '__main__':
     ic = EasyIce.initialize(sys.argv)
     prop = ic.getProperties()
+    print prop
     cameraCli = CameraClient(ic, "Introrob.Camera", True)
     camera = CameraFilter(cameraCli)
     navdata = NavDataClient(ic, "Introrob.Navdata", True)
@@ -50,7 +51,7 @@ if __name__ == '__main__':
     algorithm=MyAlgorithm(camera, navdata, pose, cmdvel, extra)
 
 
-    app = QApplication(sys.argv)
+    app = QtGui.QApplication(sys.argv)
     frame = MainWindow()
     frame.setCamera(camera)
     frame.setNavData(navdata)
