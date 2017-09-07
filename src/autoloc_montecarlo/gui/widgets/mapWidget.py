@@ -107,21 +107,36 @@ class MapWidget(QWidget):
         painter.setPen(pen)
         painter.drawPolygon(triangle)
 
+    def prob2Color(self, prob):
+        r = 0
+        g = 0
+        b = 0
+        if (prob > 50):
+            g = 255 * (prob - 50)/50
+            b = 255 * (100 - prob)/50
+        elif (prob <= 50):
+            b = 255 * prob/50
+            r = 255 * (50 - prob)/50
 
-    def drawParticle(self, painter, centerX, centerY, yaw):
-        pen = QPen(Qt.blue, 2)
+        return QtGui.QColor(r,g,b)
 
-        painter.translate(QPoint(centerX, centerX))
-        painter.rotate(-180*yaw/pi)
+
+
+    def drawParticle(self, painter, centerX, centerY, yaw, prob):
+        color = self.prob2Color(prob)
+        pen = QPen(color, 2)
+
+        #painter.translate(QPoint(centerX, centerX))
+        #painter.rotate(-180*yaw/pi)
 
         painter.setPen(pen)
         brush = QtGui.QBrush(QtCore.Qt.SolidPattern)
-        brush.setColor(QtGui.QColor(Qt.blue))
+        brush.setColor(color)
         painter.setBrush(brush)
         d=5
 
         painter.drawLine(0,0,17,0)
-        painter.drawEllipse(QPoint(0, 0), d, d)
+        painter.drawEllipse(QPoint(centerX, centerY), d, d)
 
 
     def drawParticles(self, painter):
@@ -130,7 +145,7 @@ class MapWidget(QWidget):
 
         for p in particles:
             pos = self.RTRobot() * np.matrix([[p.x], [p.y], [1], [1]]) * scale
-            self.drawParticle(painter, pos[0], pos[1], p.yaw)
+            self.drawParticle(painter, pos[0], pos[1], p.yaw, p.prob)
 
 
     def paintEvent(self, e):

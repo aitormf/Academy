@@ -26,10 +26,11 @@ from gui.form import Ui_MainWindow
 from gui.widgets.cameraWidget import CameraWidget
 
 class Particle:
-    def __init__(self, x, y, yaw):
+    def __init__(self, x, y, yaw, prob):
         self.x = x
         self.y=y
         self.yaw=yaw
+        self.prob=prob
 
 class MainWindow(QMainWindow, Ui_MainWindow):
 
@@ -53,7 +54,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         self.stopButton.clicked.connect(self.stopClicked)
 
-        self.particles = [Particle(0,0,0), Particle(1,1,0.5), Particle(2,4,1.5) ]
+        self.particles = [Particle(0,0,0,5), Particle(1,1,0.5,50), Particle(2,2,1.5,80), Particle(3,3,1.5,100), Particle(4,4,1.5,15), Particle(5,5,0.5,60) ]
 
     def updateGUI(self):
         laserdata = self.laser.getLaserData()
