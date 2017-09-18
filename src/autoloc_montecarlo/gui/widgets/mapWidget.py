@@ -25,6 +25,7 @@ from PyQt5 import QtGui, QtCore
 import numpy as np
 import math
 from math import pi as pi
+from math import cos, sin
 import cv2
 
 
@@ -135,7 +136,7 @@ class MapWidget(QWidget):
         painter.setBrush(brush)
         d=5
 
-        painter.drawLine(0,0,17,0)
+        painter.drawLine(centerX,centerY,(17*cos(-yaw))+centerX,(17*sin(-yaw))+centerY)
         painter.drawEllipse(QPoint(centerX, centerY), d, d)
 
 
